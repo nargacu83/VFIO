@@ -1,4 +1,4 @@
-<domain type="kvm">
+<domain xmlns:qemu="http://libvirt.org/schemas/domain/qemu/1.0" type="kvm">
   <name>win10</name>
   <uuid>ea66d1ce-5b35-4e06-ba19-9366aafb9ac5</uuid>
   <metadata>
@@ -9,6 +9,21 @@
   <memory unit="KiB">12288000</memory>
   <currentMemory unit="KiB">12288000</currentMemory>
   <vcpu placement="static">10</vcpu>
+  <iothreads>1</iothreads>
+  <cputune>
+    <vcpupin vcpu="0" cpuset="2"/>
+    <vcpupin vcpu="1" cpuset="3"/>
+    <vcpupin vcpu="2" cpuset="4"/>
+    <vcpupin vcpu="3" cpuset="5"/>
+    <vcpupin vcpu="4" cpuset="6"/>
+    <vcpupin vcpu="5" cpuset="7"/>
+    <vcpupin vcpu="6" cpuset="8"/>
+    <vcpupin vcpu="7" cpuset="9"/>
+    <vcpupin vcpu="8" cpuset="10"/>
+    <vcpupin vcpu="9" cpuset="11"/>
+    <emulatorpin cpuset="0-1"/>
+    <iothreadpin iothread="1" cpuset="0-1"/>
+  </cputune>
   <os>
     <type arch="x86_64" machine="pc-q35-5.2">hvm</type>
     <loader readonly="yes" type="pflash">/usr/share/edk2-ovmf/x64/OVMF_CODE.fd</loader>
@@ -24,13 +39,12 @@
       <spinlocks state="on" retries="8191"/>
       <vendor_id state="on" value="buttplug"/>
     </hyperv>
-    <kvm>
-      <hidden state="on"/>
-    </kvm>
     <vmport state="off"/>
   </features>
-  <cpu mode="host-model" check="partial">
+  <cpu mode="host-passthrough" check="none" migratable="on">
     <topology sockets="1" dies="1" cores="5" threads="2"/>
+    <cache mode="passthrough"/>
+    <feature policy="require" name="topoext"/>
   </cpu>
   <clock offset="localtime">
     <timer name="rtc" tickpolicy="catchup"/>
@@ -176,4 +190,12 @@
       <address type="pci" domain="0x0000" bus="0x04" slot="0x00" function="0x0"/>
     </memballoon>
   </devices>
+  <qemu:commandline>
+    <qemu:arg value="-global"/>
+    <qemu:arg value="kvm-pit.lost_tick_policy=discard"/>
+    <qemu:arg value="-rtc"/>
+    <qemu:arg value="base=localtime"/>
+    <qemu:arg value="-cpu"/>
+    <qemu:arg value="host,host-cache-info=on,kvm=off,l3-cache=on,kvm-hint-dedicated=on,migratable=no,hv_relaxed,hv_spinlocks=0x1fff,hv_vapic,hv_time,hv_vendor_id=Nvidia43FIX,+invtsc,+topoext"/>
+  </qemu:commandline>
 </domain>
