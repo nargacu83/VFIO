@@ -24,9 +24,6 @@
       <spinlocks state="on" retries="8191"/>
       <vendor_id state="on" value="buttplug"/>
     </hyperv>
-    <kvm>
-      <hidden state="on"/>
-    </kvm>
     <vmport state="off"/>
   </features>
   <cpu mode="host-model" check="partial">
