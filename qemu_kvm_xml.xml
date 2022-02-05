@@ -1,6 +1,6 @@
 <domain xmlns:qemu="http://libvirt.org/schemas/domain/qemu/1.0" type="kvm">
   <name>win10</name>
-  <uuid>ea66d1ce-5b35-4e06-ba19-9366aafb9ac5</uuid>
+  <uuid>3a8f84a1-51a5-462b-804b-789292780f41</uuid>
   <metadata>
     <libosinfo:libosinfo xmlns:libosinfo="http://libosinfo.org/xmlns/libvirt/domain/1.0">
       <libosinfo:os id="http://microsoft.com/win/10"/>
@@ -8,6 +8,9 @@
   </metadata>
   <memory unit="KiB">12288000</memory>
   <currentMemory unit="KiB">12288000</currentMemory>
+  <memoryBacking>
+    <hugepages/>
+  </memoryBacking>
   <vcpu placement="static">10</vcpu>
   <iothreads>1</iothreads>
   <cputune>
@@ -33,7 +36,7 @@
   <features>
     <acpi/>
     <apic/>
-    <hyperv>
+    <hyperv mode="custom">
       <relaxed state="on"/>
       <vapic state="on"/>
       <spinlocks state="on" retries="8191"/>
@@ -61,17 +64,23 @@
   </pm>
   <devices>
     <emulator>/usr/bin/qemu-system-x86_64</emulator>
-    <disk type="file" device="disk">
-      <driver name="qemu" type="qcow2"/>
-      <source file="/home/quentin/PROJECTS/VM/QEMU/win10.qcow2"/>
-      <target dev="sda" bus="sata"/>
-      <address type="drive" controller="0" bus="0" target="0" unit="0"/>
-    </disk>
     <disk type="file" device="cdrom">
       <driver name="qemu" type="raw"/>
       <target dev="sdb" bus="sata"/>
       <readonly/>
       <address type="drive" controller="0" bus="0" target="0" unit="1"/>
+    </disk>
+    <disk type="file" device="disk">
+      <driver name="qemu" type="raw" cache="none" io="threads" discard="unmap" iothread="1" queues="10"/>
+      <source file="/mnt/VM/win10.img"/>
+      <target dev="vda" bus="virtio"/>
+      <address type="pci" domain="0x0000" bus="0x0a" slot="0x00" function="0x0"/>
+    </disk>
+    <disk type="file" device="disk">
+      <driver name="qemu" type="raw" cache="none" io="threads" discard="unmap" iothread="1" queues="10"/>
+      <source file="/mnt/VM/QEMU/win10-games.img"/>
+      <target dev="vdb" bus="virtio"/>
+      <address type="pci" domain="0x0000" bus="0x0b" slot="0x00" function="0x0"/>
     </disk>
     <controller type="usb" index="0" model="qemu-xhci" ports="15">
       <address type="pci" domain="0x0000" bus="0x02" slot="0x00" function="0x0"/>
@@ -124,6 +133,26 @@
       <model name="pcie-pci-bridge"/>
       <address type="pci" domain="0x0000" bus="0x08" slot="0x00" function="0x0"/>
     </controller>
+    <controller type="pci" index="10" model="pcie-root-port">
+      <model name="pcie-root-port"/>
+      <target chassis="10" port="0x8"/>
+      <address type="pci" domain="0x0000" bus="0x00" slot="0x01" function="0x0" multifunction="on"/>
+    </controller>
+    <controller type="pci" index="11" model="pcie-root-port">
+      <model name="pcie-root-port"/>
+      <target chassis="11" port="0x9"/>
+      <address type="pci" domain="0x0000" bus="0x00" slot="0x01" function="0x1"/>
+    </controller>
+    <controller type="pci" index="12" model="pcie-root-port">
+      <model name="pcie-root-port"/>
+      <target chassis="12" port="0xa"/>
+      <address type="pci" domain="0x0000" bus="0x00" slot="0x01" function="0x2"/>
+    </controller>
+    <controller type="pci" index="13" model="pcie-root-port">
+      <model name="pcie-root-port"/>
+      <target chassis="13" port="0xb"/>
+      <address type="pci" domain="0x0000" bus="0x00" slot="0x01" function="0x3"/>
+    </controller>
     <controller type="virtio-serial" index="0">
       <address type="pci" domain="0x0000" bus="0x03" slot="0x00" function="0x0"/>
     </controller>
@@ -159,25 +188,25 @@
       </source>
       <address type="pci" domain="0x0000" bus="0x06" slot="0x00" function="0x0"/>
     </hostdev>
+    <hostdev mode="subsystem" type="pci" managed="yes">
+      <source>
+        <address domain="0x0000" bus="0x08" slot="0x00" function="0x3"/>
+      </source>
+      <address type="pci" domain="0x0000" bus="0x07" slot="0x00" function="0x0"/>
+    </hostdev>
     <hostdev mode="subsystem" type="usb" managed="yes">
       <source>
         <vendor id="0x1b1c"/>
         <product id="0x1b38"/>
       </source>
-      <address type="usb" bus="0" port="4"/>
+      <address type="usb" bus="0" port="1"/>
     </hostdev>
     <hostdev mode="subsystem" type="usb" managed="yes">
       <source>
         <vendor id="0x1b1c"/>
         <product id="0x1b3c"/>
       </source>
-      <address type="usb" bus="0" port="5"/>
-    </hostdev>
-    <hostdev mode="subsystem" type="pci" managed="yes">
-      <source>
-        <address domain="0x0000" bus="0x08" slot="0x00" function="0x3"/>
-      </source>
-      <address type="pci" domain="0x0000" bus="0x07" slot="0x00" function="0x0"/>
+      <address type="usb" bus="0" port="2"/>
     </hostdev>
     <memballoon model="virtio">
       <address type="pci" domain="0x0000" bus="0x04" slot="0x00" function="0x0"/>
