@@ -29,6 +29,26 @@ If you are using Nvidia GPU you can check [Mageas's repository](https://gitlab.c
 
 - No internet in VM:
 
+Save in default.xml:
+```
+<network>
+  <name>default</name>
+  <uuid>afd4e923-66cb-45ca-9120-1e46e72899a3</uuid>
+  <forward mode='nat'>
+    <nat>
+      <port start='1024' end='65535'/>
+    </nat>
+  </forward>
+  <bridge name='virbr0' stp='on' delay='0'/>
+  <ip address='192.168.122.1' netmask='255.255.255.0'>
+    <dhcp>
+      <range start='192.168.122.2' end='192.168.122.254'/>
+    </dhcp>
+  </ip>
+</network>
+```
+
+Then execute these lines with sudo:
 ```
 virsh net-undefine default
 virsh net-destroy default
