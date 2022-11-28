@@ -23,3 +23,20 @@ If you are using Nvidia GPU you can check [Mageas's repository](https://gitlab.c
 - [QaidVoid](https://github.com/QaidVoid) for his [Complete Single GPU Passthrough](https://github.com/QaidVoid/Complete-Single-GPU-Passthrough)
 - [Bryan Steiner]() for his [gpu-passthrough-tutorial](https://github.com/bryansteiner/gpu-passthrough-tutorial)
 - [SomeOrdinaryGamers](https://www.youtube.com/channel/UCtMVHI3AJD4Qk4hcbZnI9ZQ) for his [video](https://youtu.be/BUSrdUoedTo)
+
+
+## Troubleshooting
+
+- No internet in VM:
+
+```
+virsh net-undefine default
+virsh net-destroy default
+virsh net-list
+systemctl enable --now libvirtd
+systemctl enable virtlogd.socket
+systemctl restart libvirtd.service
+virsh net-define default.xml
+virsh net-autostart default
+virsh net-start default
+```
