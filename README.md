@@ -29,6 +29,8 @@ If you are using Nvidia GPU you can check [Mageas's repository](https://gitlab.c
 
 - No internet in VM:
 
+[Docs](https://wiki.libvirt.org/page/Networking#NAT_forwarding_.28aka_.22virtual_networks.22.29)
+
 Save in default.xml:
 ```
 <network>
