@@ -16,6 +16,58 @@ Note: You should check the `start.sh` to change the user.
 
 If you are using Nvidia GPU you can check [Mageas's repository](https://gitlab.com/Mageas/vfio-single-gup-passthrough).
 
+## Configuration
+
+CPU Pinning:
+
+```xml
+<vcpu placement="static">20</vcpu>
+<iothreads>2</iothreads>
+<cputune>
+  <vcpupin vcpu="0" cpuset="2"/>
+  <vcpupin vcpu="1" cpuset="3"/>
+  <vcpupin vcpu="2" cpuset="4"/>
+  <vcpupin vcpu="3" cpuset="5"/>
+  <vcpupin vcpu="4" cpuset="6"/>
+  <vcpupin vcpu="5" cpuset="7"/>
+  <vcpupin vcpu="6" cpuset="8"/>
+  <vcpupin vcpu="7" cpuset="9"/>
+  <vcpupin vcpu="8" cpuset="10"/>
+  <vcpupin vcpu="9" cpuset="11"/>
+  <vcpupin vcpu="10" cpuset="14"/>
+  <vcpupin vcpu="11" cpuset="15"/>
+  <vcpupin vcpu="12" cpuset="16"/>
+  <vcpupin vcpu="13" cpuset="17"/>
+  <vcpupin vcpu="14" cpuset="18"/>
+  <vcpupin vcpu="15" cpuset="19"/>
+  <vcpupin vcpu="16" cpuset="20"/>
+  <vcpupin vcpu="17" cpuset="21"/>
+  <vcpupin vcpu="18" cpuset="22"/>
+  <vcpupin vcpu="19" cpuset="23"/>
+  <emulatorpin cpuset="0-1,12-13"/>
+  <iothreadpin iothread="1" cpuset="0,12"/>
+  <iothreadpin iothread="2" cpuset="1,13"/>
+</cputune>
+```
+
+```xml
+<cpu mode="host-passthrough" check="none" migratable="on">
+  <topology sockets="1" dies="1" cores="10" threads="2"/>
+  <cache mode="passthrough"/>
+  <feature policy="require" name="topoext"/>
+</cpu>
+```
+
+Memory:
+
+```xml
+<memory unit="KiB">15624192</memory>
+<currentMemory unit="KiB">15624192</currentMemory>
+<memoryBacking>
+  <hugepages/>
+</memoryBacking>
+```
+
 ## Credits
 
 - [Mageas](https://gitlab.com/Mageas)
