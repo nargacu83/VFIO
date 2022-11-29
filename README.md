@@ -1,8 +1,8 @@
 # VFIO KVM Passthrough configuration
 
-CPU : AMD Ryzen 5 2600 Six-Core Processor
+CPU: AMD Ryzen 9 5900X
 
-GPU : Radeon RX 590 Series
+GPU: AMD ATI Radeon RX 6600/6600 XT/6600M
 
 ## About
 
