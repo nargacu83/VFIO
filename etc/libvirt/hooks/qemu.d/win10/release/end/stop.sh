@@ -19,7 +19,7 @@ echo 1 > /sys/class/vtconsole/vtcon0/bind
 echo 1 > /sys/class/vtconsole/vtcon1/bind
 
 # Rebind framebuffer to host
-# echo "efi-framebuffer.0" > /sys/bus/platform/drivers/efi-framebuffer/bind
+echo "efi-framebuffer.0" > /sys/bus/platform/drivers/efi-framebuffer/bind
 
 # Load AMD kernel module
 modprobe  amdgpu
@@ -31,4 +31,4 @@ modprobe  drm
 modprobe  snd_hda_intel
 
 # Restart Display Manager
-systemctl start lightdm.service
+systemctl start sddm.service
