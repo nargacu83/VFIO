@@ -81,6 +81,9 @@ Memory:
 
 - No internet in VM:
 
+**First, you need to check your physical device name.** e.g `enp5s0`.
+You can see it by going to network-manager and inspect your regular ethernet/wifi connection. 
+
 https://wiki.libvirt.org/page/Networking#NAT_forwarding_.28aka_.22virtual_networks.22.29
 
 Save in a file called `default.xml` [src](https://github.com/libvirt/libvirt/blob/master/src/network/default.xml.in):
