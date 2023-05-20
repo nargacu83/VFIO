@@ -14,7 +14,7 @@ Works on Arch Linux with the amdgpu driver and PipeWire (should work fine with p
 
 Note: You should check the `start.sh` to change the user.
 
-If you are using Nvidia GPU you can check [Mageas's repository](https://gitlab.com/Mageas/vfio-single-gup-passthrough).
+If you are using Nvidia GPU you can check [Mageas's repository](https://github.com/Mageas/single-gpu-passthrough).
 
 ## Configuration
 
@@ -70,7 +70,7 @@ Memory:
 
 ## Credits
 
-- [Mageas](https://gitlab.com/Mageas)
+- [Mageas](https://github.com/Mageas)
 - [Mocan Cosmin](https://github.com/cosminmocan) for his [vfio-single-amdgpu-passthrough](https://github.com/cosminmocan/vfio-single-amdgpu-passthrough)
 - [QaidVoid](https://github.com/QaidVoid) for his [Complete Single GPU Passthrough](https://github.com/QaidVoid/Complete-Single-GPU-Passthrough)
 - [Bryan Steiner]() for his [gpu-passthrough-tutorial](https://github.com/bryansteiner/gpu-passthrough-tutorial)
